@@ -1,22 +1,25 @@
-import axios from "axios";
 import { useEffect } from "react";
+import { opportunityState } from "../../store/opportunitiesStore";
 
 const WelcomePage = () => {
+  const fetchAllOpportunity = opportunityState(
+    (state) => state.fetchAllOpportunity
+  );
+  const opportunity = opportunityState((state) => state.items);
+
   useEffect(() => {
-    const testApi = async () => {
-      const opportunity = await axios.get(
-        "https://help-up-ua-server.onrender.com/api/opportunities/"
-      );
-
-      return opportunity.data.data;
-    };
-
-    testApi();
+    fetchAllOpportunity();
   }, []);
 
   return (
     <div className="bg-lime-400 p-7 border-2 border-cyan-700 w-64">
-      <ul>{}</ul>
+      <ul>
+        {opportunity.map((opp) => (
+          <li key={opp.id}>
+            <p>{opp.title}</p>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

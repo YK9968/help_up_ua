@@ -24,7 +24,7 @@ interface IAuthState {
   refreshUser: (token: string) => void;
 }
 
-const BASE_URL = "http://localhost:3000/api/auth/";
+const BASE_URL = "https://help-up-ua-server.onrender.com/api/auth/";
 
 export const authState = create<IAuthState>()(
   devtools(

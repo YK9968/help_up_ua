@@ -14,7 +14,7 @@ interface IOpportunityState {
   deleteOpportunity: (id: string) => void;
 }
 
-const BASE_URL = "http://localhost:3000/api/opportunities/";
+const BASE_URL = "https://help-up-ua-server.onrender.com/api/opportunities/";
 
 export const opportunityState = create<IOpportunityState>()(
   devtools(
