@@ -26,7 +26,7 @@ export const opportunityState = create<IOpportunityState>()(
         try {
           set({ loading: true, error: false });
           const response = await axios.get(`${BASE_URL}`);
-          set({ items: response.data });
+          set({ items: response.data.data });
           set({ loading: false });
         } catch (error) {
           set({ error: true });

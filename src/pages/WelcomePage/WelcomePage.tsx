@@ -11,12 +11,20 @@ const WelcomePage = () => {
     fetchAllOpportunity();
   }, []);
 
+  if (!opportunity) {
+    return;
+  }
+
+  console.log(opportunity);
+
   return (
     <div className="bg-lime-400 p-7 border-2 border-cyan-700 w-64">
       <ul>
         {opportunity.map((opp) => (
           <li key={opp.id}>
             <p>{opp.title}</p>
+            <p>{opp.description}</p>
+            <img src={opp.imageUrl} />
           </li>
         ))}
       </ul>
