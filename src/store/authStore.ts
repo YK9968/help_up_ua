@@ -18,11 +18,19 @@ interface IAuthState {
   token: string | null;
   error: boolean;
   loading: boolean;
-  registerUser: (payload: IRegisterUser) => void;
-  loginUser: (payload: ILoginUser) => void;
-  logOutUser: (id: string) => void;
-  refreshUser: (token: string) => void;
+  registerUser: (payload: IRegisterUser) => Promise<void>;
+  loginUser: (payload: ILoginUser) => Promise<void>;
+  logOutUser: () => void;
+  refreshUser: (token: string) => Promise<void>;
 }
+
+const setAuthHeader = (token: string) => {
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+};
+
+const clearAuthHeader = () => {
+  axios.defaults.headers.common["Authorization"] = "";
+};
 
 const BASE_URL = "https://help-up-ua-server.onrender.com/api/auth/";
 
@@ -39,7 +47,14 @@ export const authState = create<IAuthState>()(
           try {
             set({ loading: true, error: false });
             const response = await axios.post(`${BASE_URL}register`, payload);
-            set({ user: response.data, token: response.data.accessToken });
+            setAuthHeader(response.data.accessToken);
+            set({
+              user: response.data as IUser,
+              token: response.data.accessToken,
+              isLogin: true,
+              loading: false,
+              error: false,
+            });
           } catch (error) {
             set({ loading: false, error: true });
           }
@@ -48,28 +63,34 @@ export const authState = create<IAuthState>()(
           try {
             set({ loading: true, error: false });
             const response = await axios.post(`${BASE_URL}login`, payload);
-            set({ user: response.data, token: response.data.accessToken });
+            setAuthHeader(response.data.accessToken);
+            set({
+              user: response.data as IUser,
+              token: response.data.accessToken,
+              isLogin: true,
+              loading: false,
+              error: false,
+            });
           } catch (error) {
             set({ loading: false, error: true });
           }
         },
-        logOutUser: async (id: string) => {
-          try {
-            set({ loading: true, error: false });
-            await axios.post(`${BASE_URL}logout/${id}`);
-            set({ user: null, isLogin: false, token: null });
-          } catch (error) {
-            set({ loading: false, error: true });
-          }
+        logOutUser: () => {
+          set({ user: null, isLogin: false, token: null });
+          clearAuthHeader();
         },
         refreshUser: async (token: string) => {
           try {
-            const response = await axios.post(`${BASE_URL}acces-token`, token);
+            const response = await axios.post(`${BASE_URL}acces-token`, {
+              token,
+            });
             set({ token: response.data.accessToken });
-          } catch (error) {}
+          } catch (error) {
+            set({ loading: false, error: true });
+          }
         },
       })),
-      { name: "token" }
+      { name: "auth" }
     )
   )
 );
