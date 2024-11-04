@@ -6,11 +6,7 @@ interface IButtonProps {
 }
 
 const Button: FC<IButtonProps> = ({ props }) => {
-  return (
-    <div>
-      <button className={getClassNameForBtn(props)}>{props}</button>
-    </div>
-  );
+  return <button className={getClassNameForBtn(props)}>{props}</button>;
 };
 
 export default Button;
