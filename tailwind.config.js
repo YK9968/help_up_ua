@@ -4,7 +4,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        borderColor: "#191A15",
+        borderColor: "#191A15, opasity-10",
+        buttonColor: "#3470FF",
+        buttonHoverColor: "#255EE8",
       },
     },
   },

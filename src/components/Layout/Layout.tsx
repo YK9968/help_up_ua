@@ -7,9 +7,9 @@ interface ILayout {
 
 const Layout: FC<ILayout> = ({ children }) => {
   return (
-    <div className="px-20">
+    <div>
       <Navigation />
-      {children}
+      <div className="px-20">{children}</div>
     </div>
   );
 };

@@ -7,18 +7,20 @@ function Navigation() {
     isActive ? "text-blue-500" : "text-black";
 
   return (
-    <div className="flex justify-between items-center  py-6 mb-12 border-b border-borderColor border-opacity-10">
-      <Logo />
-      <div className="flex gap-10">
-        <NavLink to="/" className={activePage}>
-          Home
-        </NavLink>
-        <NavLink to="/opportunities" className={activePage}>
-          Opportunity
-        </NavLink>
+    <header className=" py-6 px-20  border-b border-borderColor  mb-12 ">
+      <div className="flex justify-between items-center   ">
+        <Logo />
+        <div className="flex gap-10">
+          <NavLink to="/" className={activePage}>
+            Home
+          </NavLink>
+          <NavLink to="/opportunities" className={activePage}>
+            Opportunity
+          </NavLink>
+        </div>
+        <ButtonContainer />
       </div>
-      <ButtonContainer />
-    </div>
+    </header>
   );
 }
 
