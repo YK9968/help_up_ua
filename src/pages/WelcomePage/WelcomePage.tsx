@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-import Button from "../../components/Button/Button";
 import heroDesk1x from "/src/assets/img/hero-desk.jpg";
 import heroDesk2x from "/src/assets/img/hero-desk@2.jpg";
 
