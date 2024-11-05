@@ -1,5 +1,4 @@
 import { VolunteerType } from "../../types/opportunitiesType";
-import Button from "../Button/Button";
 
 const Filter = () => {
   return (
@@ -19,7 +18,9 @@ const Filter = () => {
         ))}
       </ul>
       <div className="flex items-center justify-center mt-8">
-        <Button props="Search" />
+        <button className="p-buttomFilterPadding bg-buttonColor text-white rounded-3xl hover:bg-buttonHoverColor transition-all duration-150 ease-in-out ">
+          Search
+        </button>
       </div>
     </div>
   );
