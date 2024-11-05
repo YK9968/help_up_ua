@@ -10,6 +10,16 @@ export default {
       },
       width: {
         mainTextWidth: "595px",
+        cardOpportunityWidth: "853px",
+        imgOpportunityWidth: "249px",
+        titleOpportunityWidth: "493px",
+        filterOpportunityWidth: "400px",
+      },
+      height: {
+        cardOpportunityHeight: "343px",
+        imgOpportunityHeight: "249px",
+        titleOpportunityHeight: "78px",
+        filterOpportunityHeight: "620px",
       },
       fontSize: {
         mainTextSize: "80px",
@@ -20,10 +30,14 @@ export default {
       margin: {
         textContainerMarginTop: "104px",
       },
+      padding: {
+        buttomFilterPadding: "14px 100px",
+      },
       borderRadius: {
         mainBorderImg: "50px",
       },
     },
   },
   plugins: [],
+  filterOpportunityWidth: "",
 };
