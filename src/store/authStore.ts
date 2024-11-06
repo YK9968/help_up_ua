@@ -50,7 +50,7 @@ export const authState = create<IAuthState>()(
             setAuthHeader(response.data.accessToken);
             set({
               user: response.data as IUser,
-              token: response.data.accessToken,
+              token: response.data.data.accessToken,
               isLogin: true,
               loading: false,
               error: false,
@@ -66,7 +66,7 @@ export const authState = create<IAuthState>()(
             setAuthHeader(response.data.accessToken);
             set({
               user: response.data as IUser,
-              token: response.data.accessToken,
+              token: response.data.data.accessToken,
               isLogin: true,
               loading: false,
               error: false,

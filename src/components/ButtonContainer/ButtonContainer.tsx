@@ -2,6 +2,8 @@ import { useState } from "react";
 import LoginForm from "../LoginForm/LoginForm";
 import RegisterForm from "../RegisterForm/RegisterForm";
 import Modal from "react-modal";
+import { IoCloseOutline } from "react-icons/io5";
+
 Modal.setAppElement("#root");
 
 const ButtonContainer = () => {
@@ -30,7 +32,29 @@ const ButtonContainer = () => {
         Registration
       </button>
 
-      <Modal isOpen={isOpenLoginForm} onRequestClose={togleLoginForm}>
+      <Modal
+        style={{
+          content: {
+            width: "566px",
+            height: "510px",
+            margin: "auto",
+            borderRadius: "20px",
+            padding: "64px",
+            backgroundColor: "#fff",
+            boxShadow: "0 4px 15px rgba(0, 0, 0, 0.1)",
+            position: "relative",
+          },
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.7)",
+            zIndex: 1000,
+          },
+        }}
+        isOpen={isOpenLoginForm}
+        onRequestClose={togleLoginForm}
+      >
+        <button onClick={togleLoginForm} className="absolute right-7 top-7 ">
+          <IoCloseOutline className="w-8 h-8" />
+        </button>
         <LoginForm togleForm={togleLoginForm} />
       </Modal>
       <Modal isOpen={isOpenRegisterForm} onRequestClose={togleRegisterForm}>

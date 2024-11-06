@@ -14,12 +14,14 @@ export default {
         imgOpportunityWidth: "249px",
         titleOpportunityWidth: "493px",
         filterOpportunityWidth: "400px",
+        loginFormWidth: "566px",
       },
       height: {
         cardOpportunityHeight: "343px",
         imgOpportunityHeight: "249px",
         titleOpportunityHeight: "78px",
         filterOpportunityHeight: "620px",
+        loginFormHeight: "510px",
       },
       fontSize: {
         mainTextSize: "80px",
