@@ -9,9 +9,6 @@ interface ILayout {
 
 const Layout: FC<ILayout> = ({ children }) => {
   const loading = authState((state) => state.loading);
-  const token = authState((state) => state.token);
-
-  console.log(token);
 
   return (
     <div>

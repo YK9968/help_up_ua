@@ -57,7 +57,29 @@ const ButtonContainer = () => {
         </button>
         <LoginForm togleForm={togleLoginForm} />
       </Modal>
-      <Modal isOpen={isOpenRegisterForm} onRequestClose={togleRegisterForm}>
+      <Modal
+        style={{
+          content: {
+            width: "1036px",
+            height: "639px",
+            margin: "auto",
+            borderRadius: "20px",
+            padding: "64px",
+            backgroundColor: "#fff",
+            boxShadow: "0 4px 15px rgba(0, 0, 0, 0.1)",
+            position: "relative",
+          },
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.7)",
+            zIndex: 1000,
+          },
+        }}
+        isOpen={isOpenRegisterForm}
+        onRequestClose={togleRegisterForm}
+      >
+        <button onClick={togleRegisterForm} className="absolute right-7 top-7 ">
+          <IoCloseOutline className="w-8 h-8" />
+        </button>
         <RegisterForm togleForm={togleRegisterForm} />
       </Modal>
     </div>

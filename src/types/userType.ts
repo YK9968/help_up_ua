@@ -4,8 +4,8 @@ export interface IRegisterUser {
   email: string;
   password: string;
   phone: string;
-  age: number;
-  isCompany: boolean;
+  age: number | string;
+  isCompany?: boolean;
 }
 
 export interface ILoginUser {

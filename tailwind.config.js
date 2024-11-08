@@ -15,6 +15,7 @@ export default {
         titleOpportunityWidth: "493px",
         filterOpportunityWidth: "400px",
         loginFormWidth: "566px",
+        registerFormInputWidth: "438px",
       },
       height: {
         cardOpportunityHeight: "343px",
