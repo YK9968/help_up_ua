@@ -6,9 +6,11 @@ import { IOpportunity, IUpdateOpportunity } from "../types/opportunitiesType";
 
 interface IOpportunityState {
   items: IOpportunity[];
+  opportunity: IOpportunity | null;
   loading: boolean;
   error: boolean;
   fetchAllOpportunity: () => void;
+  fetchOpportunityById: (id: string) => void;
   addOpportunity: (payload: IOpportunity) => void;
   updateOpportunity: (payload: IUpdateOpportunity, id: string) => void;
   deleteOpportunity: (id: string) => void;
@@ -20,6 +22,7 @@ export const opportunityState = create<IOpportunityState>()(
   devtools(
     immer((set) => ({
       items: [],
+      opportunity: null,
       loading: false,
       error: false,
       fetchAllOpportunity: async () => {
@@ -27,6 +30,20 @@ export const opportunityState = create<IOpportunityState>()(
           set({ loading: true, error: false });
           const response = await axios.get(`${BASE_URL}`);
           set({ items: response.data.data });
+          set({ loading: false });
+        } catch (error) {
+          set({ error: true });
+        } finally {
+          set({ loading: false });
+        }
+      },
+      fetchOpportunityById: async (id: string) => {
+        try {
+          set({ loading: true, error: false });
+          const response = await axios.get(`${BASE_URL}` + id);
+          set((state) => {
+            state.opportunity = response.data.data;
+          });
           set({ loading: false });
         } catch (error) {
           set({ error: true });
