@@ -3,6 +3,7 @@ import LoginForm from "../LoginForm/LoginForm";
 import RegisterForm from "../RegisterForm/RegisterForm";
 import Modal from "react-modal";
 import { IoCloseOutline } from "react-icons/io5";
+import { styles, overlay } from "../../modalStyles/modalStyles";
 
 Modal.setAppElement("#root");
 
@@ -37,17 +38,10 @@ const ButtonContainer = () => {
           content: {
             width: "566px",
             height: "510px",
-            margin: "auto",
-            borderRadius: "20px",
-            padding: "64px",
-            backgroundColor: "#fff",
-            boxShadow: "0 4px 15px rgba(0, 0, 0, 0.1)",
             position: "relative",
+            ...styles,
           },
-          overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.7)",
-            zIndex: 1000,
-          },
+          overlay,
         }}
         isOpen={isOpenLoginForm}
         onRequestClose={togleLoginForm}
@@ -62,17 +56,10 @@ const ButtonContainer = () => {
           content: {
             width: "1036px",
             height: "639px",
-            margin: "auto",
-            borderRadius: "20px",
-            padding: "64px",
-            backgroundColor: "#fff",
-            boxShadow: "0 4px 15px rgba(0, 0, 0, 0.1)",
             position: "relative",
+            ...styles,
           },
-          overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.7)",
-            zIndex: 1000,
-          },
+          overlay,
         }}
         isOpen={isOpenRegisterForm}
         onRequestClose={togleRegisterForm}

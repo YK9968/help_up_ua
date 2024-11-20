@@ -6,7 +6,7 @@ export interface ICreateOpportunity {
   description: string;
   date?: string;
   typeWork: VolunteerType;
-  imageUrl?: string;
+  image?: File | string;
   location: string;
 }
 
@@ -18,7 +18,7 @@ export interface IUpdateOpportunity {
   description?: string;
   date?: string;
   typeWork?: VolunteerType;
-  imageUrl?: string;
+  image?: File | string;
   location?: string;
 }
 

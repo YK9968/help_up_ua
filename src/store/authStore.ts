@@ -4,16 +4,21 @@ import { devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { ILoginUser, IRegisterUser } from "../types/userType";
 
+interface IResponse {
+  data: IUser;
+}
+
 interface IUser {
   id: string;
   firstName: string;
   email: string;
   refreshToken: string;
   accessToken: string;
+  isCompany: boolean;
 }
 
 interface IAuthState {
-  user: IUser | null;
+  user: IResponse | null;
   isLogin: boolean;
   token: string | null;
   error: boolean;
@@ -49,7 +54,7 @@ export const authState = create<IAuthState>()(
             const response = await axios.post(`${BASE_URL}register`, payload);
             setAuthHeader(response.data.accessToken);
             set({
-              user: response.data as IUser,
+              user: response.data as IResponse,
               token: response.data.data.accessToken,
               isLogin: true,
               loading: false,
@@ -65,7 +70,7 @@ export const authState = create<IAuthState>()(
             const response = await axios.post(`${BASE_URL}login`, payload);
             setAuthHeader(response.data.accessToken);
             set({
-              user: response.data as IUser,
+              user: response.data as IResponse,
               token: response.data.data.accessToken,
               isLogin: true,
               loading: false,

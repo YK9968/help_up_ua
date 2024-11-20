@@ -2,7 +2,11 @@ import axios from "axios";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import { IOpportunity, IUpdateOpportunity } from "../types/opportunitiesType";
+import {
+  ICreateOpportunity,
+  IOpportunity,
+  IUpdateOpportunity,
+} from "../types/opportunitiesType";
 
 interface IOpportunityState {
   items: IOpportunity[];
@@ -11,7 +15,7 @@ interface IOpportunityState {
   error: boolean;
   fetchAllOpportunity: () => void;
   fetchOpportunityById: (id: string) => void;
-  addOpportunity: (payload: IOpportunity) => void;
+  addOpportunity: (payload: ICreateOpportunity) => void;
   updateOpportunity: (payload: IUpdateOpportunity, id: string) => void;
   deleteOpportunity: (id: string) => void;
 }
@@ -51,7 +55,7 @@ export const opportunityState = create<IOpportunityState>()(
           set({ loading: false });
         }
       },
-      addOpportunity: async (payload: IOpportunity) => {
+      addOpportunity: async (payload: ICreateOpportunity) => {
         try {
           set({ loading: true, error: false });
           const response = await axios.post(`${BASE_URL}`, payload);
@@ -96,6 +100,7 @@ export const opportunityState = create<IOpportunityState>()(
           set({ loading: false });
         }
       },
-    }))
+    })),
+    { name: "opportunity" }
   )
 );
