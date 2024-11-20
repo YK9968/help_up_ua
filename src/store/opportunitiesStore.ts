@@ -58,7 +58,10 @@ export const opportunityState = create<IOpportunityState>()(
       addOpportunity: async (payload: ICreateOpportunity) => {
         try {
           set({ loading: true, error: false });
-          const response = await axios.post(`${BASE_URL}`, payload);
+          const response = await axios.post(
+            `${BASE_URL}my-opportunities`,
+            payload
+          );
           set((state) => {
             state.items.push(response.data);
           });
