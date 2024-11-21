@@ -1,19 +1,26 @@
 import { FaPlus } from "react-icons/fa6";
-import { MdEdit } from "react-icons/md";
-import { MdDelete } from "react-icons/md";
 import Modal from "react-modal";
 import { opportunityState } from "../../store/opportunitiesStore";
 import { authState } from "../../store/authStore";
-import OpportunityCard from "../../components/OpportunityCard/OpportunityCard";
 import { overlay, styles } from "../../modalStyles/modalStyles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddOpportunityForm from "../../components/AddOpportunityForm/AddOpportunityForm";
 import { IoCloseOutline } from "react-icons/io5";
+import OpportunitiesList from "../../components/OpportunitiesList/OpportunitiesList";
 
 const MyOpportunitiesPage = () => {
   const opportunities = opportunityState((state) => state.items);
   const userId = authState((state) => state.user?.data.id);
-  const userOpportunities = opportunities.filter((opp) => opp.id === userId);
+  const userOpportunities = opportunities.filter(
+    (opp) => opp.userId === userId
+  );
+  const fetchAllOpportunity = opportunityState(
+    (state) => state.fetchAllOpportunity
+  );
+
+  useEffect(() => {
+    fetchAllOpportunity();
+  }, [fetchAllOpportunity]);
 
   const [isOpenOpportunityForm, setIsOpenOpportunityForm] =
     useState<boolean>(false);
@@ -34,7 +41,6 @@ const MyOpportunitiesPage = () => {
         <FaPlus />
         Add opportunities
       </button>
-
       <Modal
         style={{
           content: {
@@ -56,20 +62,7 @@ const MyOpportunitiesPage = () => {
         </button>
         <AddOpportunityForm togleForm={togleOpportunityForm} />
       </Modal>
-
-      <ul>
-        {userOpportunities.map((opp) => (
-          <li key={opp.id}>
-            <button>
-              <MdEdit />
-            </button>
-            <button>
-              <MdDelete />
-            </button>
-            <OpportunityCard info={opp} />
-          </li>
-        ))}
-      </ul>
+      <OpportunitiesList opportunities={userOpportunities} type="my-opp" />
     </div>
   );
 };

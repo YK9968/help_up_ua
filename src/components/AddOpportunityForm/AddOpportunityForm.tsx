@@ -11,27 +11,27 @@ import { opportunityState } from "../../store/opportunitiesStore";
 interface IOportunityProps {
   togleForm: () => void;
 }
+const initialValues: ICreateOpportunity = {
+  title: "",
+  organizationName: "",
+  website: "",
+  email: "",
+  description: "",
+  date: "",
+  typeWork: VolunteerType.SOCIAL_ASSISTANCE,
+  image: "",
+  location: "",
+};
 
 const AddOpportunityForm: FC<IOportunityProps> = ({ togleForm }) => {
   const addOpportunity = opportunityState((state) => state.addOpportunity);
-
-  const initialValues: ICreateOpportunity = {
-    title: "",
-    organizationName: "",
-    website: "",
-    email: "",
-    description: "",
-    date: "",
-    typeWork: VolunteerType.SOCIAL_ASSISTANCE,
-    image: "",
-    location: "",
-  };
 
   const handleSubmitOpportunity = async (
     value: ICreateOpportunity,
     actions: FormikHelpers<ICreateOpportunity>
   ): Promise<void> => {
     try {
+      console.log(value);
       addOpportunity(value);
       actions.resetForm();
       togleForm();
@@ -55,16 +55,27 @@ const AddOpportunityForm: FC<IOportunityProps> = ({ togleForm }) => {
           <div className="flex  justify-between">
             <div>
               <RenderField name="title" placeholder="Title" type="text" />
-              <RenderField name="date" placeholder="Date" type="text" />
+              <RenderField name="date" placeholder="Date" type="date" />
               <RenderField name="location" placeholder="Location" type="text" />
               <RenderField name="website" placeholder="Website" type="text" />
             </div>
             <div>
-              {" "}
               <RenderField
                 name="typeWork"
                 placeholder="Categories"
-                type="text"
+                type="select"
+                options={[
+                  "SOCIAL_ASSISTANCE",
+                  "ENVIRONMENTAL_ACTIVITIES",
+                  "EDUCATION_MENTORING",
+                  "MEDICAL_SERVICES",
+                  "SUPPORT_FOR_ELDERLY",
+                  "ANIMAL_WELFARE",
+                  "CULTURAL_INITIATIVES",
+                  "HUMANITARIAN_MISSIONS",
+                  "SPORTS_INITIATIVES",
+                  "CRISIS_RESPONSE_VOLUNTEERING",
+                ]}
               />
               <RenderField
                 name="organizationName"

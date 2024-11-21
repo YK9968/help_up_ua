@@ -51,7 +51,7 @@ export const authState = create<IAuthState>()(
         try {
           set({ loading: true, error: false });
           const response = await axios.post(`${BASE_URL}register`, payload);
-          setAuthHeader(response.data.accessToken);
+          setAuthHeader(response.data.data.accessToken);
           set({
             user: response.data as IResponse,
             token: response.data.data.accessToken,
@@ -67,7 +67,7 @@ export const authState = create<IAuthState>()(
         try {
           set({ loading: true, error: false });
           const response = await axios.post(`${BASE_URL}login`, payload);
-          setAuthHeader(response.data.accessToken);
+          setAuthHeader(response.data.data.accessToken);
           set({
             user: response.data as IResponse,
             token: response.data.data.accessToken,
@@ -88,7 +88,7 @@ export const authState = create<IAuthState>()(
           const response = await axios.post(`${BASE_URL}acces-token`, {
             token,
           });
-          set({ token: response.data.accessToken });
+          set({ token: response.data.data.accessToken });
         } catch (error) {
           set({ loading: false, error: true });
         }

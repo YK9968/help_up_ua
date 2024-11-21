@@ -19,7 +19,10 @@ const OpportunityCard: FC<IOpportunityProps> = ({ info }) => {
     day: "numeric",
   });
 
-  const opportunityLocation = location[0].toUpperCase() + location.slice(1);
+  if (!location) {
+    return;
+  }
+
   return (
     <div className="flex gap-3">
       <div
@@ -34,7 +37,7 @@ const OpportunityCard: FC<IOpportunityProps> = ({ info }) => {
           </div>
           <div className="flex items-center justify-center gap-2  ">
             <IoLocationOutline className="w-7 h-7 text-buttonColor " />
-            <p>{opportunityLocation}</p>
+            <p>{location[0].toUpperCase() + location.slice(1)}</p>
           </div>
         </div>
         <div className="flex items-center  gap-2 mb-5  ">

@@ -41,6 +41,7 @@ export const opportunityState = create<IOpportunityState>()(
           set({ loading: false });
         }
       },
+
       fetchOpportunityById: async (id: string) => {
         try {
           set({ loading: true, error: false });
@@ -63,10 +64,11 @@ export const opportunityState = create<IOpportunityState>()(
             payload
           );
           set((state) => {
-            state.items.push(response.data);
+            state.items = [response.data.data, ...state.items];
           });
           set({ loading: false });
         } catch (error) {
+          console.log(error);
           set({ error: true });
         } finally {
           set({ loading: false });

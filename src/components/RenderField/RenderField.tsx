@@ -4,18 +4,38 @@ import { FC } from "react";
 interface IRenderFieldProps {
   name: string;
   placeholder: string;
-  type: "text" | "File";
+  type: "text" | "File" | "select" | "date";
+  options?: string[];
 }
 
-const RenderField: FC<IRenderFieldProps> = ({ name, placeholder, type }) => {
+const RenderField: FC<IRenderFieldProps> = ({
+  name,
+  placeholder,
+  type,
+  options,
+}) => {
   return (
     <div className="relative">
-      <Field
-        className="bg-borderColor border py-4 pl-4 w-registerFormInputWidth mb-4 rounded-2xl "
-        type={type}
-        name={name}
-        placeholder={placeholder}
-      />
+      {type === "select" ? (
+        <Field
+          as="select"
+          name={name}
+          className="bg-borderColor border py-4 pl-4 w-registerFormInputWidth mb-4 rounded-2xl"
+        >
+          {options?.map((option, index) => (
+            <option key={index} value={option}>
+              {option.replace(/_/g, " ").toUpperCase()}
+            </option>
+          ))}
+        </Field>
+      ) : (
+        <Field
+          className="bg-borderColor border py-4 pl-4 w-registerFormInputWidth mb-4 rounded-2xl"
+          type={type}
+          name={name}
+          placeholder={placeholder}
+        />
+      )}
       <ErrorMessage
         name={name}
         component="div"
