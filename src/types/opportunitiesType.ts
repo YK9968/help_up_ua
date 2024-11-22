@@ -4,8 +4,8 @@ export interface ICreateOpportunity {
   website?: string;
   email: string;
   description: string;
-  date?: string;
-  typeWork: VolunteerType;
+  date: string;
+  typeWork: VolunteerType | string;
   image?: File | string;
   location: string;
 }

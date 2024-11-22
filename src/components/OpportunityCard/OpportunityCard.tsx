@@ -24,7 +24,7 @@ const OpportunityCard: FC<IOpportunityProps> = ({ info }) => {
   }
 
   return (
-    <div className="flex gap-3">
+    <div className="flex gap-3 ">
       <div
         className="w-imgOpportunityWidth h-imgOpportunityHeight bg-cover bg-center bg-no-repeat rounded-3xl"
         style={{ backgroundImage: `url(${imageUrl})` }}

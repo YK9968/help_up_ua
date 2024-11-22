@@ -45,7 +45,7 @@ const MyOpportunitiesPage = () => {
         style={{
           content: {
             width: "1036px",
-            height: "739px",
+            height: "639px",
             position: "relative",
             ...styles,
           },

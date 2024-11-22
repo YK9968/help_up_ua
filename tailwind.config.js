@@ -17,6 +17,7 @@ export default {
         filterOpportunityWidth: "400px",
         loginFormWidth: "566px",
         registerFormInputWidth: "438px",
+        addOppFormInputWidth: "420px",
         opportunityTextContainerWidth: "730px",
       },
       height: {
@@ -25,6 +26,8 @@ export default {
         imgOpportunityDetailHeight: "350px",
         titleOpportunityHeight: "78px",
         filterOpportunityHeight: "620px",
+        registerFormInputHeight: "52px",
+        descriptionFormInputHeight: "534px",
         loginFormHeight: "510px",
       },
       fontSize: {
