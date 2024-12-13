@@ -1,6 +1,6 @@
 import axios from "axios";
 import { create } from "zustand";
-import { devtools } from "zustand/middleware";
+import { devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { ILoginUser, IRegisterUser } from "../types/userType";
 
@@ -40,60 +40,62 @@ const clearAuthHeader = () => {
 const BASE_URL = "https://help-up-ua-server.onrender.com/api/auth/";
 
 export const authState = create<IAuthState>()(
-  devtools(
-    immer((set) => ({
-      user: null,
-      isLogin: false,
-      token: null,
-      loading: false,
-      error: false,
-      registerUser: async (payload: IRegisterUser) => {
-        try {
-          set({ loading: true, error: false });
-          const response = await axios.post(`${BASE_URL}register`, payload);
-          setAuthHeader(response.data.data.accessToken);
-          set({
-            user: response.data as IResponse,
-            token: response.data.data.accessToken,
-            isLogin: true,
-            loading: false,
-            error: false,
-          });
-        } catch (error) {
-          set({ loading: false, error: true });
-        }
-      },
-      loginUser: async (payload: ILoginUser) => {
-        try {
-          set({ loading: true, error: false });
-          const response = await axios.post(`${BASE_URL}login`, payload);
-          setAuthHeader(response.data.data.accessToken);
-          set({
-            user: response.data as IResponse,
-            token: response.data.data.accessToken,
-            isLogin: true,
-            loading: false,
-            error: false,
-          });
-        } catch (error) {
-          set({ loading: false, error: true });
-        }
-      },
-      logOutUser: () => {
-        set({ user: null, isLogin: false, token: null });
-        clearAuthHeader();
-      },
-      refreshUser: async (token: string) => {
-        try {
-          const response = await axios.post(`${BASE_URL}acces-token`, {
-            token,
-          });
-          set({ token: response.data.data.accessToken });
-        } catch (error) {
-          set({ loading: false, error: true });
-        }
-      },
-    })),
+  persist(
+    devtools(
+      immer((set) => ({
+        user: null,
+        isLogin: false,
+        token: null,
+        loading: false,
+        error: false,
+        registerUser: async (payload: IRegisterUser) => {
+          try {
+            set({ loading: true, error: false });
+            const response = await axios.post(`${BASE_URL}register`, payload);
+            setAuthHeader(response.data.data.accessToken);
+            set({
+              user: response.data as IResponse,
+              token: response.data.data.accessToken,
+              isLogin: true,
+              loading: false,
+              error: false,
+            });
+          } catch (error) {
+            set({ loading: false, error: true });
+          }
+        },
+        loginUser: async (payload: ILoginUser) => {
+          try {
+            set({ loading: true, error: false });
+            const response = await axios.post(`${BASE_URL}login`, payload);
+            setAuthHeader(response.data.data.accessToken);
+            set({
+              user: response.data as IResponse,
+              token: response.data.data.accessToken,
+              isLogin: true,
+              loading: false,
+              error: false,
+            });
+          } catch (error) {
+            set({ loading: false, error: true });
+          }
+        },
+        logOutUser: () => {
+          set({ user: null, isLogin: false, token: null });
+          clearAuthHeader();
+        },
+        refreshUser: async (token: string) => {
+          try {
+            const response = await axios.post(`${BASE_URL}acces-token`, {
+              token,
+            });
+            set({ token: response.data.data.accessToken });
+          } catch (error) {
+            set({ loading: false, error: true });
+          }
+        },
+      }))
+    ),
     { name: "auth" }
   )
 );

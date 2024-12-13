@@ -4,12 +4,17 @@ import RegisterForm from "../RegisterForm/RegisterForm";
 import Modal from "react-modal";
 import { IoCloseOutline } from "react-icons/io5";
 import { styles, overlay } from "../../modalStyles/modalStyles";
+import { IoIosLogOut } from "react-icons/io";
+import LogoutForm from "../LogoutForm/LogoutForm";
+import { authState } from "../../store/authStore";
 
 Modal.setAppElement("#root");
 
 const ButtonContainer = () => {
   const [isOpenLoginForm, setIsOpenLoginForm] = useState<boolean>(false);
   const [isOpenRegisterForm, setIsOpenRegisterForm] = useState<boolean>(false);
+  const [isOpenLogoutForm, setIsOpenLogoutForm] = useState<boolean>(false);
+  const isLogin = authState((state) => state.isLogin);
 
   const togleLoginForm = () => {
     setIsOpenLoginForm(!isOpenLoginForm);
@@ -17,21 +22,35 @@ const ButtonContainer = () => {
   const togleRegisterForm = () => {
     setIsOpenRegisterForm(!isOpenRegisterForm);
   };
+  const togleLogoutForm = () => {
+    setIsOpenLogoutForm(!isOpenLogoutForm);
+  };
 
   return (
-    <div className="flex gap-2">
-      <button
-        onClick={togleLoginForm}
-        className="py-3 px-10 bg-transparent border border-borderColor  text-black rounded-3xl hover:border-buttonHoverColor transition-all duration-150 ease-in-out"
-      >
-        Login
-      </button>
-      <button
-        onClick={togleRegisterForm}
-        className="py-3 px-10 bg-buttonColor text-white rounded-3xl hover:bg-buttonHoverColor transition-all duration-150 ease-in-out "
-      >
-        Registration
-      </button>
+    <div>
+      {!isLogin ? (
+        <div className="flex gap-2 items-center">
+          <button
+            onClick={togleLoginForm}
+            className="py-3 px-10 bg-transparent border border-borderColor  text-black rounded-3xl hover:border-buttonHoverColor transition-all duration-150 ease-in-out"
+          >
+            Login
+          </button>
+          <button
+            onClick={togleRegisterForm}
+            className="py-3 px-10 bg-buttonColor text-white rounded-3xl hover:bg-buttonHoverColor transition-all duration-150 ease-in-out "
+          >
+            Registration
+          </button>
+        </div>
+      ) : (
+        <button
+          className="py-3 px-10 bg-transparent border border-borderColor  text-black rounded-3xl hover:border-buttonHoverColor transition-all duration-150 ease-in-out"
+          onClick={togleLogoutForm}
+        >
+          Logout
+        </button>
+      )}
 
       <Modal
         style={{
@@ -68,6 +87,24 @@ const ButtonContainer = () => {
           <IoCloseOutline className="w-8 h-8" />
         </button>
         <RegisterForm togleForm={togleRegisterForm} />
+      </Modal>
+
+      <Modal
+        style={{
+          content: {
+            width: "566px",
+            position: "relative",
+            ...styles,
+          },
+          overlay,
+        }}
+        isOpen={isOpenLogoutForm}
+        onRequestClose={togleLogoutForm}
+      >
+        <button onClick={togleLogoutForm} className="absolute right-7 top-7 ">
+          <IoCloseOutline className="w-8 h-8" />
+        </button>
+        <LogoutForm togleForm={togleLogoutForm} />
       </Modal>
     </div>
   );
