@@ -4,7 +4,6 @@ import RegisterForm from "../RegisterForm/RegisterForm";
 import Modal from "react-modal";
 import { IoCloseOutline } from "react-icons/io5";
 import { styles, overlay } from "../../modalStyles/modalStyles";
-import { IoIosLogOut } from "react-icons/io";
 import LogoutForm from "../LogoutForm/LogoutForm";
 import { authState } from "../../store/authStore";
 

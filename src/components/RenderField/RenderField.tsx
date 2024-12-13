@@ -27,7 +27,7 @@ const RenderField: FC<IRenderFieldProps> = ({
           name={name}
           className="bg-transparent appearance-auto  border py-4 pl-4 w-addOppFormInputWidth mb-4 rounded-2xl "
         >
-          <option className="bg-borderColor" value="" disabled selected>
+          <option className="bg-borderColor" value="" disabled>
             {placeholder}
           </option>
           {options?.map((option, index) => (

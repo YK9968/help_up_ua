@@ -13,7 +13,7 @@ const OpportunitiesList: FC<IOpportunitiesListProps> = ({
   type,
 }) => {
   if (opportunities.length === 0) {
-    return <p>No opportunities available at the moment.</p>;
+    return <p className="mt-2">No opportunities available at the moment.</p>;
   }
 
   const sortedOpportunities = [...opportunities].sort((a, b) => {

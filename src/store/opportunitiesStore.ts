@@ -61,7 +61,12 @@ export const opportunityState = create<IOpportunityState>()(
           set({ loading: true, error: false });
           const response = await axios.post(
             `${BASE_URL}my-opportunities`,
-            payload
+            payload,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
           );
           set((state) => {
             state.items = [response.data.data, ...state.items];

@@ -45,7 +45,7 @@ const OpportunityCard: FC<IOpportunityProps> = ({ info }) => {
           <p>{setTypeWork(typeWork)}</p>
         </div>
         <NavLink
-          className="w-titleOpportunityWidth h-titleOpportunityHeight break-words  mb-5 block font-semibold text-3xl"
+          className="w-titleOpportunityWidth h-titleOpportunityHeight break-words  mb-5 block font-semibold text-3xl  hover:text-buttonHoverColor transition-all duration-150 ease-in-out "
           to={`/opportunities/${id}`}
         >
           {title}

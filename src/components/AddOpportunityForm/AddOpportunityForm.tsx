@@ -28,7 +28,6 @@ const AddOpportunityForm: FC<IOportunityProps> = ({ togleForm }) => {
     actions: FormikHelpers<ICreateOpportunity>
   ): Promise<void> => {
     try {
-      console.log(value);
       addOpportunity(value);
       actions.resetForm();
       togleForm();
@@ -45,7 +44,7 @@ const AddOpportunityForm: FC<IOportunityProps> = ({ togleForm }) => {
     >
       <Form className="custom-scrollbar">
         <p className="flex items-center  text-2xl pb-12">
-          <span className="text-blue-500">Create</span> Opptrunity
+          <span className="text-blue-500 mr-1">Add</span>Opptrunity
         </p>
 
         <div className="flex gap-8 mb-12 ">
