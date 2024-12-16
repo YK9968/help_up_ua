@@ -36,7 +36,7 @@ const MyOpportunitiesPage = () => {
       </p>
       <button
         onClick={togleOpportunityForm}
-        className="flex gap-2 items-center justify-center py-3 px-10 bg-buttonColor text-white rounded-3xl hover:bg-buttonHoverColor transition-all duration-150 ease-in-out "
+        className="flex gap-2 items-center justify-center py-3 px-10 bg-buttonColor text-white rounded-3xl hover:bg-buttonHoverColor transition-all duration-150 ease-in-out mb-5 "
       >
         <FaPlus />
         Add opportunities

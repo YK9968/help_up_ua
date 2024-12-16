@@ -16,10 +16,10 @@ const OpportunitiesList: FC<IOpportunitiesListProps> = ({
   opportunities,
   type,
 }) => {
-  const [isOpenDeleteForm, setIsOpenDeleteForm] = useState<boolean>(false);
+  const [openDeleteFormId, setOpenDeleteFormId] = useState<string | null>(null);
 
-  const togleDeleteForm = () => {
-    setIsOpenDeleteForm(!isOpenDeleteForm);
+  const togleDeleteForm = (id: string) => {
+    setOpenDeleteFormId(id === openDeleteFormId ? null : id);
   };
 
   if (opportunities.length === 0) {
@@ -45,41 +45,47 @@ const OpportunitiesList: FC<IOpportunitiesListProps> = ({
       ))}
     </ul>
   ) : (
-    <ul>
+    <ul className="flex flex-col gap-10 mb-24">
       {sortedOpportunities.map((opp: IOpportunity) => (
-        <li key={opp.id}>
-          <button>
-            <MdEdit />
-          </button>
-          <button onClick={togleDeleteForm}>
-            <MdDelete />
-          </button>
-
-          <Modal
-            style={{
-              content: {
-                width: "566px",
-                position: "relative",
-                ...styles,
-              },
-              overlay,
-            }}
-            isOpen={isOpenDeleteForm}
-            onRequestClose={togleDeleteForm}
-          >
-            <button
-              onClick={togleDeleteForm}
-              className="absolute right-7 top-7 "
+        <li
+          className="w-cardOpportunityWidth px-10 py-12 drop-shadow-lg bg-white rounded-3xl"
+          key={opp.id}
+        >
+          <div className="flex">
+            <Modal
+              style={{
+                content: {
+                  width: "566px",
+                  position: "relative",
+                  ...styles,
+                },
+                overlay,
+              }}
+              isOpen={openDeleteFormId === opp.id} //
+              onRequestClose={() => setOpenDeleteFormId(null)}
             >
-              <IoCloseOutline className="w-8 h-8" />
-            </button>
-            <ConfirmForm
-              togleForm={togleDeleteForm}
-              type="deleteOpportunity"
-              opportunityId={opp.id}
-            />
-          </Modal>
-          <OpportunityCard info={opp} />
+              <button
+                onClick={() => setOpenDeleteFormId(null)}
+                className="absolute right-7 top-7 "
+              >
+                <IoCloseOutline className="w-8 h-8" />
+              </button>
+              <ConfirmForm
+                togleForm={() => setOpenDeleteFormId(null)}
+                type="deleteOpportunity"
+                opportunityId={opp.id}
+              />
+            </Modal>
+            <OpportunityCard info={opp} />
+            <div>
+              <button>
+                <MdEdit className="w-6 h-6 text-borderColor opacity-80 hover:text-buttonHoverColor transition-all duration-150 ease-in-out " />
+              </button>
+              <button onClick={() => togleDeleteForm(opp.id)}>
+                <MdDelete className="w-6 h-6  text-borderColor opacity-80 hover:text-buttonHoverColor transition-all duration-150 ease-in-out " />
+              </button>
+            </div>
+          </div>
         </li>
       ))}
     </ul>

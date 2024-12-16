@@ -24,7 +24,7 @@ const OpportunityCard: FC<IOpportunityProps> = ({ info }) => {
   }
 
   return (
-    <div className="flex gap-3 ">
+    <div className="flex gap-3  ">
       <div
         className="w-imgOpportunityWidth h-imgOpportunityHeight bg-cover bg-center bg-no-repeat rounded-3xl"
         style={{ backgroundImage: `url(${imageUrl})` }}
@@ -50,16 +50,17 @@ const OpportunityCard: FC<IOpportunityProps> = ({ info }) => {
         >
           {title}
         </NavLink>
-
-        <a
-          className="flex items-center  gap-2 "
-          href={website}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <CiGlobe className="w-7 h-7 text-buttonColor" />
-          {website}
-        </a>
+        <div className="flex items-center  gap-2 ">
+          <CiGlobe className="w-7 h-7 text-buttonColor inline-block" />
+          <a
+            className=" inline-block "
+            href={website}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {website}
+          </a>
+        </div>
       </div>
     </div>
   );
