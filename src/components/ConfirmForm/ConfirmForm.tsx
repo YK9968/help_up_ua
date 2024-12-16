@@ -9,7 +9,6 @@ interface iConfirmForm {
 }
 
 const ConfirmForm: FC<iConfirmForm> = ({ togleForm, type, opportunityId }) => {
-  console.log(opportunityId);
   const logOutUser = authState((state) => state.logOutUser);
   const deleteOpportunity = opportunityState(
     (state) => state.deleteOpportunity

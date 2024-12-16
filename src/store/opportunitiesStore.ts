@@ -59,9 +59,26 @@ export const opportunityState = create<IOpportunityState>()(
       addOpportunity: async (payload: ICreateOpportunity) => {
         try {
           set({ loading: true, error: false });
+          const formData = new FormData();
+          formData.append("title", payload.title);
+          formData.append("organizationName", payload.organizationName);
+          formData.append("email", payload.email);
+          formData.append("description", payload.description);
+          formData.append("website", payload.website);
+          formData.append("location", payload.location);
+          formData.append("date", payload.date);
+          formData.append("typeWork", payload.typeWork);
+          if (payload.image) {
+            formData.append("image", payload.image);
+          }
           const response = await axios.post(
             `${BASE_URL}my-opportunities`,
-            payload
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
           );
           set((state) => {
             state.items = [response.data.data, ...state.items];
@@ -83,7 +100,6 @@ export const opportunityState = create<IOpportunityState>()(
               opp.id === id ? response.data : opp
             )
           );
-
           set({ loading: false });
         } catch (error) {
           set({ error: true });

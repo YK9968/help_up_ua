@@ -29,6 +29,7 @@ const AddOpportunityForm: FC<IOportunityProps> = ({ togleForm }) => {
   ): Promise<void> => {
     try {
       addOpportunity(value);
+      console.log(value);
       actions.resetForm();
       togleForm();
     } catch (error) {
