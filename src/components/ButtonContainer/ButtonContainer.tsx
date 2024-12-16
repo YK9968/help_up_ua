@@ -4,8 +4,8 @@ import RegisterForm from "../RegisterForm/RegisterForm";
 import Modal from "react-modal";
 import { IoCloseOutline } from "react-icons/io5";
 import { styles, overlay } from "../../modalStyles/modalStyles";
-import LogoutForm from "../LogoutForm/LogoutForm";
 import { authState } from "../../store/authStore";
+import ConfirmForm from "../ConfirmForm/ConfirmForm";
 
 Modal.setAppElement("#root");
 
@@ -103,7 +103,7 @@ const ButtonContainer = () => {
         <button onClick={togleLogoutForm} className="absolute right-7 top-7 ">
           <IoCloseOutline className="w-8 h-8" />
         </button>
-        <LogoutForm togleForm={togleLogoutForm} />
+        <ConfirmForm togleForm={togleLogoutForm} type="logoutUser" />
       </Modal>
     </div>
   );
