@@ -61,12 +61,7 @@ export const opportunityState = create<IOpportunityState>()(
           set({ loading: true, error: false });
           const response = await axios.post(
             `${BASE_URL}my-opportunities`,
-            payload,
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            }
+            payload
           );
           set((state) => {
             state.items = [response.data.data, ...state.items];
@@ -99,10 +94,12 @@ export const opportunityState = create<IOpportunityState>()(
       deleteOpportunity: async (id: string) => {
         try {
           set({ loading: true, error: false });
-          await axios.delete(`${BASE_URL}${id}`);
-          set((state) =>
-            state.items.filter((opp: IOpportunity) => opp.id !== id)
-          );
+          await axios.delete(`${BASE_URL}my-opportunities/${id}`);
+          set((state) => {
+            state.items = state.items.filter(
+              (opp: IOpportunity) => opp.id !== id
+            );
+          });
           set({ loading: false });
         } catch (error) {
           set({ error: true });
