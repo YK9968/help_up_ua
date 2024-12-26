@@ -57,7 +57,7 @@ export const deleteOpportunity = createAsyncThunk(
       const response = await axios.delete(
         `/opportunities/my-opportunities/${id}`
       );
-      return response.data.data;
+      return response.data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || "Failed to delete opp"

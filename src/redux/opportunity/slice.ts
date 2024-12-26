@@ -64,7 +64,7 @@ export const opportunitiesSlice = createSlice({
       })
       .addCase(deleteOpportunity.fulfilled, (state, action) => {
         state.isOppLoading = false;
-        state.items = state.items.filter((opp) => opp.id !== action.payload);
+        state.items = state.items.filter((opp) => opp.id !== action.payload.id);
       })
       .addCase(deleteOpportunity.rejected, (state) => {
         state.isOppLoading = false;
