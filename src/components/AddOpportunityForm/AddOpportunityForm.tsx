@@ -3,7 +3,8 @@ import { FC } from "react";
 import { ICreateOpportunity } from "../../types/opportunitiesType";
 import validationOpportunitySchema from "../../validation/validationOpportunity";
 import RenderField from "../RenderField/RenderField";
-import { opportunityState } from "../../store/opportunitiesStore";
+import { useAppDispatch } from "../../redux/store";
+import { addOpportunity } from "../../redux/opportunity/operations";
 
 interface IOportunityProps {
   togleForm: () => void;
@@ -21,15 +22,14 @@ const initialValues: ICreateOpportunity = {
 };
 
 const AddOpportunityForm: FC<IOportunityProps> = ({ togleForm }) => {
-  const addOpportunity = opportunityState((state) => state.addOpportunity);
+  const dispatch = useAppDispatch();
 
   const handleSubmitOpportunity = async (
     value: ICreateOpportunity,
     actions: FormikHelpers<ICreateOpportunity>
   ): Promise<void> => {
     try {
-      addOpportunity(value);
-      console.log(value);
+      dispatch(addOpportunity(value));
       actions.resetForm();
       togleForm();
     } catch (error) {

@@ -1,9 +1,10 @@
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import { FC, useState } from "react";
 import { FaEyeSlash } from "react-icons/fa";
-import { authState } from "../../store/authStore";
-import { ILoginUser } from "../../types/userType";
 import { loginValidation } from "../../validation/validationLoginUser";
+import { useAppDispatch } from "../../redux/store";
+import { loginUser } from "../../redux/auth/operations";
+import { ILoginUser } from "../../types/authTypes";
 
 interface iLoginForm {
   togleForm: () => void;
@@ -12,16 +13,16 @@ interface iLoginForm {
 const LoginForm: FC<iLoginForm> = ({ togleForm }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const loginUser = authState((state) => state.loginUser);
+  const dispatch = useAppDispatch();
 
   const handleLoginUser = async (
     value: ILoginUser,
     actions: FormikHelpers<ILoginUser>
   ): Promise<void> => {
     try {
-      await loginUser(value);
-      actions.resetForm();
       togleForm();
+      dispatch(loginUser(value));
+      actions.resetForm();
     } catch (error) {
       console.log(error);
     }

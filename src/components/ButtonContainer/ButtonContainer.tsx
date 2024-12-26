@@ -4,8 +4,9 @@ import RegisterForm from "../RegisterForm/RegisterForm";
 import Modal from "react-modal";
 import { IoCloseOutline } from "react-icons/io5";
 import { styles, overlay } from "../../modalStyles/modalStyles";
-import { authState } from "../../store/authStore";
 import ConfirmForm from "../ConfirmForm/ConfirmForm";
+import { useAppSelector } from "../../redux/store";
+import { selectIsLoggedIn } from "../../redux/auth/selectors";
 
 Modal.setAppElement("#root");
 
@@ -13,15 +14,15 @@ const ButtonContainer = () => {
   const [isOpenLoginForm, setIsOpenLoginForm] = useState<boolean>(false);
   const [isOpenRegisterForm, setIsOpenRegisterForm] = useState<boolean>(false);
   const [isOpenLogoutForm, setIsOpenLogoutForm] = useState<boolean>(false);
-  const isLogin = authState((state) => state.isLogin);
+  const isLogin = useAppSelector(selectIsLoggedIn);
 
-  const togleLoginForm = () => {
+  const toggleLoginForm = () => {
     setIsOpenLoginForm(!isOpenLoginForm);
   };
-  const togleRegisterForm = () => {
+  const toggleRegisterForm = () => {
     setIsOpenRegisterForm(!isOpenRegisterForm);
   };
-  const togleLogoutForm = () => {
+  const toggleLogoutForm = () => {
     setIsOpenLogoutForm(!isOpenLogoutForm);
   };
 
@@ -30,13 +31,13 @@ const ButtonContainer = () => {
       {!isLogin ? (
         <div className="flex gap-2 items-center">
           <button
-            onClick={togleLoginForm}
+            onClick={toggleLoginForm}
             className="py-3 px-10 bg-transparent border border-borderColor  text-black rounded-3xl hover:border-buttonHoverColor transition-all duration-150 ease-in-out"
           >
             Login
           </button>
           <button
-            onClick={togleRegisterForm}
+            onClick={toggleRegisterForm}
             className="py-3 px-10 bg-buttonColor text-white rounded-3xl hover:bg-buttonHoverColor transition-all duration-150 ease-in-out "
           >
             Registration
@@ -45,7 +46,7 @@ const ButtonContainer = () => {
       ) : (
         <button
           className="py-3 px-10 bg-transparent border border-borderColor  text-black rounded-3xl hover:border-buttonHoverColor transition-all duration-150 ease-in-out"
-          onClick={togleLogoutForm}
+          onClick={toggleLogoutForm}
         >
           Logout
         </button>
@@ -62,12 +63,12 @@ const ButtonContainer = () => {
           overlay,
         }}
         isOpen={isOpenLoginForm}
-        onRequestClose={togleLoginForm}
+        onRequestClose={toggleLoginForm}
       >
-        <button onClick={togleLoginForm} className="absolute right-7 top-7 ">
+        <button onClick={toggleLoginForm} className="absolute right-7 top-7 ">
           <IoCloseOutline className="w-8 h-8" />
         </button>
-        <LoginForm togleForm={togleLoginForm} />
+        <LoginForm togleForm={toggleLoginForm} />
       </Modal>
       <Modal
         style={{
@@ -80,12 +81,15 @@ const ButtonContainer = () => {
           overlay,
         }}
         isOpen={isOpenRegisterForm}
-        onRequestClose={togleRegisterForm}
+        onRequestClose={toggleRegisterForm}
       >
-        <button onClick={togleRegisterForm} className="absolute right-7 top-7 ">
+        <button
+          onClick={toggleRegisterForm}
+          className="absolute right-7 top-7 "
+        >
           <IoCloseOutline className="w-8 h-8" />
         </button>
-        <RegisterForm togleForm={togleRegisterForm} />
+        <RegisterForm togleForm={toggleRegisterForm} />
       </Modal>
 
       <Modal
@@ -98,12 +102,12 @@ const ButtonContainer = () => {
           overlay,
         }}
         isOpen={isOpenLogoutForm}
-        onRequestClose={togleLogoutForm}
+        onRequestClose={toggleLogoutForm}
       >
-        <button onClick={togleLogoutForm} className="absolute right-7 top-7 ">
+        <button onClick={toggleLogoutForm} className="absolute right-7 top-7 ">
           <IoCloseOutline className="w-8 h-8" />
         </button>
-        <ConfirmForm togleForm={togleLogoutForm} type="logoutUser" />
+        <ConfirmForm togleForm={toggleLogoutForm} type="logoutUser" />
       </Modal>
     </div>
   );

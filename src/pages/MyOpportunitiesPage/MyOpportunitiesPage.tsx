@@ -1,26 +1,27 @@
 import { FaPlus } from "react-icons/fa6";
 import Modal from "react-modal";
-import { opportunityState } from "../../store/opportunitiesStore";
-import { authState } from "../../store/authStore";
 import { overlay, styles } from "../../modalStyles/modalStyles";
 import { useEffect, useState } from "react";
 import AddOpportunityForm from "../../components/AddOpportunityForm/AddOpportunityForm";
 import { IoCloseOutline } from "react-icons/io5";
 import OpportunitiesList from "../../components/OpportunitiesList/OpportunitiesList";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { selectUser } from "../../redux/auth/selectors";
+import { selectOpportunities } from "../../redux/opportunity/selectors";
+import { fetchAllOpportunity } from "../../redux/opportunity/operations";
 
 const MyOpportunitiesPage = () => {
-  const opportunities = opportunityState((state) => state.items);
-  const userId = authState((state) => state.user?.data.id);
+  const opportunities = useAppSelector(selectOpportunities);
+  const user = useAppSelector(selectUser);
   const userOpportunities = opportunities.filter(
-    (opp) => opp.userId === userId
-  );
-  const fetchAllOpportunity = opportunityState(
-    (state) => state.fetchAllOpportunity
+    (opp) => opp.userId === user.id
   );
 
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
-    fetchAllOpportunity();
-  }, [fetchAllOpportunity]);
+    dispatch(fetchAllOpportunity);
+  }, [dispatch]);
 
   const [isOpenOpportunityForm, setIsOpenOpportunityForm] =
     useState<boolean>(false);

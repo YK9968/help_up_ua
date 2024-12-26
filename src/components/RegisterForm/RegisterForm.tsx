@@ -1,9 +1,11 @@
 import { Field, Form, Formik, FormikHelpers, ErrorMessage } from "formik";
 import { FC, useState } from "react";
-import { IRegisterUser } from "../../types/userType";
-import { authState } from "../../store/authStore";
+
 import { FaEyeSlash } from "react-icons/fa";
 import { registerValidation } from "../../validation/validationRegisterUser";
+import { IRegisterUser } from "../../types/authTypes";
+import { useAppDispatch } from "../../redux/store";
+import { registerUser } from "../../redux/auth/operations";
 
 interface iRegisterForm {
   togleForm: () => void;
@@ -12,7 +14,7 @@ interface iRegisterForm {
 const RegisterForm: FC<iRegisterForm> = ({ togleForm }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const registerUser = authState((state) => state.registerUser);
+  const dispatch = useAppDispatch();
 
   const initialValues: IRegisterUser = {
     firstName: "",
@@ -29,9 +31,9 @@ const RegisterForm: FC<iRegisterForm> = ({ togleForm }) => {
     actions: FormikHelpers<IRegisterUser>
   ): Promise<void> => {
     try {
-      await registerUser(value);
-      actions.resetForm();
       togleForm();
+      dispatch(registerUser(value));
+      actions.resetForm();
     } catch (error) {
       console.log(error);
     }

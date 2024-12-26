@@ -1,6 +1,7 @@
 import { FC } from "react";
-import { authState } from "../../store/authStore";
-import { opportunityState } from "../../store/opportunitiesStore";
+import { useAppDispatch } from "../../redux/store";
+import { logOut } from "../../redux/auth/slice";
+import { deleteOpportunity } from "../../redux/opportunity/operations";
 
 interface iConfirmForm {
   togleForm: () => void;
@@ -9,16 +10,13 @@ interface iConfirmForm {
 }
 
 const ConfirmForm: FC<iConfirmForm> = ({ togleForm, type, opportunityId }) => {
-  const logOutUser = authState((state) => state.logOutUser);
-  const deleteOpportunity = opportunityState(
-    (state) => state.deleteOpportunity
-  );
+  const dispatch = useAppDispatch();
   const confirmForm = () => {
     if (type === "logoutUser") {
-      logOutUser();
+      dispatch(logOut());
     }
     if (type === "deleteOpportunity" && opportunityId) {
-      deleteOpportunity(opportunityId);
+      dispatch(deleteOpportunity(opportunityId));
     }
     togleForm();
   };

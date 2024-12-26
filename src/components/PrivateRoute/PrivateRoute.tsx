@@ -1,6 +1,7 @@
 import { FC } from "react";
-import { authState } from "../../store/authStore";
 import { Navigate } from "react-router-dom";
+import { useAppSelector } from "../../redux/store";
+import { selectIsCompany } from "../../redux/auth/selectors";
 
 interface IPrivateRouteProps {
   component: React.ReactNode;
@@ -8,7 +9,7 @@ interface IPrivateRouteProps {
 }
 
 const PrivateRoute: FC<IPrivateRouteProps> = ({ component, redirectTo }) => {
-  const isCompany = authState((state) => state.user?.data.isCompany);
+  const isCompany = useAppSelector(selectIsCompany);
 
   return isCompany ? component : <Navigate to={redirectTo} />;
 };

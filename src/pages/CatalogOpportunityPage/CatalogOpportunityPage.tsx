@@ -1,18 +1,23 @@
 import { useEffect } from "react";
-import { opportunityState } from "../../store/opportunitiesStore";
 import Pagination from "../../components/Pagination/Pagination";
 import Filter from "../../components/Filter/Filter";
 import OpportunitiesList from "../../components/OpportunitiesList/OpportunitiesList";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { fetchAllOpportunity } from "../../redux/opportunity/operations";
+import { selectOpportunities } from "../../redux/opportunity/selectors";
 
 const CatalogOpportunityPage = () => {
-  const opportunities = opportunityState((state) => state.items);
-  const fetchAllOpportunity = opportunityState(
-    (state) => state.fetchAllOpportunity
-  );
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    fetchAllOpportunity();
-  }, [fetchAllOpportunity]);
+    dispatch(fetchAllOpportunity());
+  }, [dispatch]);
+
+  const opportunities = useAppSelector(selectOpportunities);
+
+  if (opportunities.length === 0) {
+    return;
+  }
 
   return (
     <div className="pb-24">

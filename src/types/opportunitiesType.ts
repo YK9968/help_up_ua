@@ -50,3 +50,9 @@ export enum VolunteerType {
   SPORTS_INITIATIVES = "SPORTS_INITIATIVES",
   CRISIS_RESPONSE_VOLUNTEERING = "CRISIS_RESPONSE_VOLUNTEERING",
 }
+
+export interface IOpportunitiseState {
+  items: IOpportunity[];
+  isOppLoading: boolean;
+  isOppError: boolean;
+}

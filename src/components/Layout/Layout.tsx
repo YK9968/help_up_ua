@@ -1,16 +1,18 @@
 import { FC, ReactNode } from "react";
 import Navigation from "../Navigation/Navigation";
-import { authState } from "../../store/authStore";
+
 import Loader from "../Loader/Loader";
-import { opportunityState } from "../../store/opportunitiesStore";
+import { useAppSelector } from "../../redux/store";
+import { selectIsLoading } from "../../redux/auth/selectors";
+import { selectIsLoadingOpportunities } from "../../redux/opportunity/selectors";
 
 interface ILayout {
   children: ReactNode;
 }
 
 const Layout: FC<ILayout> = ({ children }) => {
-  const authLoading = authState((state) => state.loading);
-  const opportunityLoading = opportunityState((state) => state.loading);
+  const authLoading = useAppSelector(selectIsLoading);
+  const opportunityLoading = useAppSelector(selectIsLoadingOpportunities);
 
   return (
     <div className="relative">

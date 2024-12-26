@@ -1,23 +1,16 @@
-import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { opportunityState } from "../../store/opportunitiesStore";
 import { setTypeWork } from "../../utils/setTypeWork";
 import { CiCalendarDate, CiGlobe, CiGrid42 } from "react-icons/ci";
 import { MdOutlineEmail } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
+import { useAppSelector } from "../../redux/store";
+import { selectOpportunities } from "../../redux/opportunity/selectors";
 
 const DetailsOpportunityPage = () => {
   const { id } = useParams();
-  const fetchOpportunityById = opportunityState(
-    (state) => state.fetchOpportunityById
-  );
-  const opportunity = opportunityState((state) => state.opportunity);
+  const opportunities = useAppSelector(selectOpportunities);
 
-  if (id) {
-    useEffect(() => {
-      fetchOpportunityById(id);
-    }, []);
-  }
+  const opportunity = opportunities.find((opp) => opp.id === id);
 
   if (!opportunity) {
     return;
