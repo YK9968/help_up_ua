@@ -4,12 +4,12 @@ import { logOut } from "../../redux/auth/slice";
 import { deleteOpportunity } from "../../redux/opportunity/operations";
 
 interface iConfirmForm {
-  togleForm: () => void;
+  toggleForm: () => void;
   type: string;
   opportunityId?: string;
 }
 
-const ConfirmForm: FC<iConfirmForm> = ({ togleForm, type, opportunityId }) => {
+const ConfirmForm: FC<iConfirmForm> = ({ toggleForm, type, opportunityId }) => {
   const dispatch = useAppDispatch();
   const confirmForm = () => {
     if (type === "logoutUser") {
@@ -18,7 +18,7 @@ const ConfirmForm: FC<iConfirmForm> = ({ togleForm, type, opportunityId }) => {
     if (type === "deleteOpportunity" && opportunityId) {
       dispatch(deleteOpportunity(opportunityId));
     }
-    togleForm();
+    toggleForm();
   };
 
   return (
@@ -50,7 +50,7 @@ const ConfirmForm: FC<iConfirmForm> = ({ togleForm, type, opportunityId }) => {
         <button
           className=" w-full py-3 px-10 bg-buttonColor text-white rounded-3xl hover:bg-buttonHoverColor transition-all duration-150 ease-in-out "
           type="submit"
-          onClick={togleForm}
+          onClick={toggleForm}
         >
           No
         </button>

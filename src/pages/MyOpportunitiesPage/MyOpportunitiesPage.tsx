@@ -2,7 +2,7 @@ import { FaPlus } from "react-icons/fa6";
 import Modal from "react-modal";
 import { overlay, styles } from "../../modalStyles/modalStyles";
 import { useEffect, useState } from "react";
-import AddOpportunityForm from "../../components/AddOpportunityForm/AddOpportunityForm";
+import OpportunityForm from "../../components/OpportunityForm/OpportunityForm";
 import { IoCloseOutline } from "react-icons/io5";
 import OpportunitiesList from "../../components/OpportunitiesList/OpportunitiesList";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
@@ -26,7 +26,7 @@ const MyOpportunitiesPage = () => {
   const [isOpenOpportunityForm, setIsOpenOpportunityForm] =
     useState<boolean>(false);
 
-  const togleOpportunityForm = () => {
+  const toggleOpportunityForm = () => {
     setIsOpenOpportunityForm(!isOpenOpportunityForm);
   };
 
@@ -36,7 +36,7 @@ const MyOpportunitiesPage = () => {
         <span className="text-blue-500 ">My-</span>opportunities
       </p>
       <button
-        onClick={togleOpportunityForm}
+        onClick={toggleOpportunityForm}
         className="flex gap-2 items-center justify-center py-3 px-10 bg-buttonColor text-white rounded-3xl hover:bg-buttonHoverColor transition-all duration-150 ease-in-out mb-5 "
       >
         <FaPlus />
@@ -53,15 +53,15 @@ const MyOpportunitiesPage = () => {
           overlay,
         }}
         isOpen={isOpenOpportunityForm}
-        onRequestClose={togleOpportunityForm}
+        onRequestClose={toggleOpportunityForm}
       >
         <button
-          onClick={togleOpportunityForm}
+          onClick={toggleOpportunityForm}
           className="absolute right-7 top-7 "
         >
           <IoCloseOutline className="w-8 h-8" />
         </button>
-        <AddOpportunityForm togleForm={togleOpportunityForm} />
+        <OpportunityForm toggleForm={toggleOpportunityForm} type="add" />
       </Modal>
       <OpportunitiesList opportunities={userOpportunities} type="my-opp" />
     </div>

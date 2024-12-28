@@ -5,6 +5,7 @@ import { loginValidation } from "../../validation/validationLoginUser";
 import { useAppDispatch } from "../../redux/store";
 import { loginUser } from "../../redux/auth/operations";
 import { ILoginUser } from "../../types/authTypes";
+import toast from "react-hot-toast";
 
 interface iLoginForm {
   togleForm: () => void;
@@ -19,13 +20,19 @@ const LoginForm: FC<iLoginForm> = ({ togleForm }) => {
     value: ILoginUser,
     actions: FormikHelpers<ILoginUser>
   ): Promise<void> => {
-    try {
-      togleForm();
-      dispatch(loginUser(value));
-      actions.resetForm();
-    } catch (error) {
-      console.log(error);
-    }
+    togleForm();
+    dispatch(loginUser(value))
+      .unwrap()
+      .then(() => {
+        toast.success("Successful authorization");
+        actions.resetForm();
+      })
+      .catch((error) => {
+        toast.error(
+          "Failed: " + error.message + ". Check your data and try again"
+        );
+      });
+    actions.resetForm();
   };
 
   const initialValues: ILoginUser = { email: "", password: "" };

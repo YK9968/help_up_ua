@@ -5,9 +5,11 @@ import validationOpportunitySchema from "../../validation/validationOpportunity"
 import RenderField from "../RenderField/RenderField";
 import { useAppDispatch } from "../../redux/store";
 import { addOpportunity } from "../../redux/opportunity/operations";
+import toast from "react-hot-toast";
 
 interface IOportunityProps {
-  togleForm: () => void;
+  toggleForm: () => void;
+  type: string;
 }
 const initialValues: ICreateOpportunity = {
   title: "",
@@ -21,7 +23,7 @@ const initialValues: ICreateOpportunity = {
   location: "",
 };
 
-const AddOpportunityForm: FC<IOportunityProps> = ({ togleForm }) => {
+const OpportunityForm: FC<IOportunityProps> = ({ toggleForm, type }) => {
   const dispatch = useAppDispatch();
 
   const handleSubmitOpportunity = async (
@@ -31,9 +33,11 @@ const AddOpportunityForm: FC<IOportunityProps> = ({ togleForm }) => {
     try {
       dispatch(addOpportunity(value));
       actions.resetForm();
-      togleForm();
+      toggleForm();
     } catch (error) {
-      console.log(error);
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
+      toast.error(errorMessage);
     }
   };
 
@@ -44,9 +48,15 @@ const AddOpportunityForm: FC<IOportunityProps> = ({ togleForm }) => {
       validationSchema={validationOpportunitySchema}
     >
       <Form className="custom-scrollbar">
-        <p className="flex items-center  text-2xl pb-12">
-          <span className="text-blue-500 mr-1">Add</span>Opptrunity
-        </p>
+        {type === "add" ? (
+          <p className="flex items-center  text-2xl pb-12">
+            <span className="text-blue-500 mr-1">Add</span>Opptrunity
+          </p>
+        ) : (
+          <p className="flex items-center  text-2xl pb-12">
+            <span className="text-blue-500 mr-1">Update</span>Opptrunity
+          </p>
+        )}
 
         <div className="flex gap-8 mb-12 ">
           <div>
@@ -99,4 +109,4 @@ const AddOpportunityForm: FC<IOportunityProps> = ({ togleForm }) => {
   );
 };
 
-export default AddOpportunityForm;
+export default OpportunityForm;
