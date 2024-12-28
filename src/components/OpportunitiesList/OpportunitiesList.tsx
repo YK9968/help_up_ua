@@ -57,7 +57,7 @@ const OpportunitiesList: FC<IOpportunitiesListProps> = ({
               confirm={true}
             />
             <Modals
-              type="update"
+              type="updateOpportunity"
               id={opp.id}
               width="1036px"
               height="639px"
@@ -72,6 +72,7 @@ const OpportunitiesList: FC<IOpportunitiesListProps> = ({
                     )
                   }
                   type="update"
+                  id={opp.id}
                 />
               }
             />

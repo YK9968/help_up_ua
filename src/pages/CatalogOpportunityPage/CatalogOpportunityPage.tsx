@@ -15,10 +15,6 @@ const CatalogOpportunityPage = () => {
 
   const opportunities = useAppSelector(selectOpportunities);
 
-  if (opportunities.length === 0) {
-    return;
-  }
-
   return (
     <div className="pb-24">
       <p className="flex gap-2 items-center font-semibold text-2xl pb-12">
@@ -28,7 +24,12 @@ const CatalogOpportunityPage = () => {
         opportunities
       </p>
       <div className="flex justify-between">
-        <OpportunitiesList opportunities={opportunities} type="all-opp" />
+        {opportunities.length !== 0 ? (
+          <OpportunitiesList opportunities={opportunities} type="all-opp" />
+        ) : (
+          <div></div>
+        )}
+
         <Filter />
       </div>
       <Pagination />

@@ -4,22 +4,10 @@ export interface ICreateOpportunity {
   website?: string;
   email: string;
   description: string;
-  date: string;
+  date: Date | string;
   typeWork: VolunteerType | string;
   image?: File | string;
   location: string;
-}
-
-export interface IUpdateOpportunity {
-  title?: string;
-  organizationName?: string;
-  website?: string;
-  email?: string;
-  description?: string;
-  date?: string;
-  typeWork?: VolunteerType;
-  image?: File | string;
-  location?: string;
 }
 
 export interface IOpportunity {
@@ -30,7 +18,7 @@ export interface IOpportunity {
   website?: string;
   email: string;
   description: string;
-  date: Date;
+  date: Date | string;
   location: string;
   createdAt?: Date;
   updatedAt?: Date;
@@ -53,6 +41,7 @@ export enum VolunteerType {
 
 export interface IOpportunitiseState {
   items: IOpportunity[];
+  userItems: IOpportunity[];
   isOppLoading: boolean;
   isOppError: boolean;
 }

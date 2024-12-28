@@ -1,44 +1,87 @@
 import { Form, Formik, FormikHelpers } from "formik";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { ICreateOpportunity } from "../../types/opportunitiesType";
 import validationOpportunitySchema from "../../validation/validationOpportunity";
 import RenderField from "../RenderField/RenderField";
-import { useAppDispatch } from "../../redux/store";
-import { addOpportunity } from "../../redux/opportunity/operations";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
+import {
+  addOpportunity,
+  updateOpportunity,
+} from "../../redux/opportunity/operations";
 import toast from "react-hot-toast";
+import { selectUserOpportunities } from "../../redux/opportunity/selectors";
 
 interface IOportunityProps {
   toggleForm: () => void;
   type: string;
+  id?: string;
 }
-const initialValues: ICreateOpportunity = {
-  title: "",
-  organizationName: "",
-  website: "",
-  email: "",
-  description: "",
-  date: "",
-  typeWork: "",
-  image: "",
-  location: "",
-};
 
-const OpportunityForm: FC<IOportunityProps> = ({ toggleForm, type }) => {
+const OpportunityForm: FC<IOportunityProps> = ({ toggleForm, type, id }) => {
   const dispatch = useAppDispatch();
+  const opportunities = useAppSelector(selectUserOpportunities);
+
+  const opp = opportunities.find((opp) => opp.id === id);
+
+  const [initialValues, setInitialValues] = useState<ICreateOpportunity>({
+    title: "",
+    organizationName: "",
+    website: "",
+    email: "",
+    description: "",
+    date: "",
+    typeWork: "",
+    image: "",
+    location: "",
+  });
+
+  useEffect(() => {
+    if (type === "update" && opp) {
+      setInitialValues({
+        title: opp.title,
+        organizationName: opp.organizationName,
+        website: opp.website,
+        email: opp.email,
+        description: opp.description,
+        date: opp.date,
+        typeWork: opp.typeWork,
+        image: opp.imageUrl,
+        location: opp.location,
+      });
+    }
+  }, [opp, type]);
 
   const handleSubmitOpportunity = async (
     value: ICreateOpportunity,
     actions: FormikHelpers<ICreateOpportunity>
   ): Promise<void> => {
-    try {
-      dispatch(addOpportunity(value));
-      actions.resetForm();
-      toggleForm();
-    } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Unknown error";
-      toast.error(errorMessage);
+    if (type === "add") {
+      dispatch(addOpportunity(value))
+        .unwrap()
+        .then(() => {
+          toast.success("Successful add opportunity");
+          actions.resetForm();
+        })
+        .catch((error) => {
+          toast.error(
+            "Failed: " + error.message + ". Check your data and try again"
+          );
+        });
+    } else {
+      dispatch(updateOpportunity({ opportunity: value, id: id }))
+        .unwrap()
+        .then(() => {
+          toast.success("Successful update opportunity");
+          actions.resetForm();
+        })
+        .catch((error) => {
+          toast.error(
+            "Failed: " + error.message + ". Check your data and try again"
+          );
+        });
     }
+    actions.resetForm();
+    toggleForm();
   };
 
   return (
@@ -46,15 +89,16 @@ const OpportunityForm: FC<IOportunityProps> = ({ toggleForm, type }) => {
       initialValues={initialValues}
       onSubmit={handleSubmitOpportunity}
       validationSchema={validationOpportunitySchema}
+      enableReinitialize
     >
       <Form className="custom-scrollbar">
         {type === "add" ? (
           <p className="flex items-center  text-2xl pb-12">
-            <span className="text-blue-500 mr-1">Add</span>Opptrunity
+            <span className="text-blue-500 mr-1">Add </span>Opptrunity
           </p>
         ) : (
           <p className="flex items-center  text-2xl pb-12">
-            <span className="text-blue-500 mr-1">Update</span>Opptrunity
+            <span className="text-blue-500 mr-1">Update </span>Opptrunity
           </p>
         )}
 

@@ -1,15 +1,25 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import {
-  ICreateOpportunity,
-  IUpdateOpportunity,
-} from "../../types/opportunitiesType";
+import { ICreateOpportunity } from "../../types/opportunitiesType";
 
 export const fetchAllOpportunity = createAsyncThunk(
   "get/opportunities",
   async (_, thunkAPI) => {
     try {
       const response = await axios.get("/opportunities");
+      return response.data.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || "Failed to get opp"
+      );
+    }
+  }
+);
+export const fetchAllUserOpportunity = createAsyncThunk(
+  "get/my-opportunities",
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get("/opportunities/my-opportunities");
       return response.data.data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(
@@ -35,7 +45,11 @@ export const addOpportunity = createAsyncThunk(
 
 export const updateOpportunity = createAsyncThunk(
   "update/opportunity",
-  async (opp: { opportunity: IUpdateOpportunity; id: string }, thunkAPI) => {
+  async (
+    opp: { opportunity: ICreateOpportunity; id: string | undefined },
+    thunkAPI
+  ) => {
+    if (!opp.id) return;
     try {
       const response = await axios.patch(
         `/opportunities/my-opportunities/${opp.id}`,

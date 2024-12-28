@@ -15,7 +15,7 @@ const ConfirmForm: FC<iConfirmForm> = ({ toggleForm, type, opportunityId }) => {
     if (type === "logoutUser") {
       dispatch(logOut());
     }
-    if (type === "deleteOpportunity" && opportunityId) {
+    if (type === "delete" && opportunityId) {
       dispatch(deleteOpportunity(opportunityId));
     }
     toggleForm();
@@ -31,7 +31,7 @@ const ConfirmForm: FC<iConfirmForm> = ({ toggleForm, type, opportunityId }) => {
           </p>
         </>
       )}
-      {type === "deleteOpportunity" && (
+      {type === "delete" && (
         <>
           <h2 className="mb-5 font-medium text-4xl">Delete Opportunity</h2>
           <p className="mb-10 text-base opacity-50">

@@ -4,11 +4,13 @@ import {
   addOpportunity,
   deleteOpportunity,
   fetchAllOpportunity,
+  fetchAllUserOpportunity,
   updateOpportunity,
 } from "./operations";
 
 const initialState: IOpportunitiseState = {
   items: [],
+  userItems: [],
   isOppLoading: false,
   isOppError: false,
 };
@@ -29,6 +31,18 @@ export const opportunitiesSlice = createSlice({
         state.items = action.payload;
       })
       .addCase(fetchAllOpportunity.rejected, (state) => {
+        state.isOppLoading = false;
+        state.isOppError = true;
+      })
+      .addCase(fetchAllUserOpportunity.pending, (state) => {
+        state.isOppLoading = true;
+        state.isOppError = false;
+      })
+      .addCase(fetchAllUserOpportunity.fulfilled, (state, action) => {
+        state.isOppLoading = false;
+        state.userItems = action.payload;
+      })
+      .addCase(fetchAllUserOpportunity.rejected, (state) => {
         state.isOppLoading = false;
         state.isOppError = true;
       })

@@ -1,26 +1,18 @@
 import { FaPlus } from "react-icons/fa6";
-import Modal from "react-modal";
-import { overlay, styles } from "../../modalStyles/modalStyles";
 import { useEffect, useState } from "react";
 import OpportunityForm from "../../components/OpportunityForm/OpportunityForm";
-import { IoCloseOutline } from "react-icons/io5";
 import OpportunitiesList from "../../components/OpportunitiesList/OpportunitiesList";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
-import { selectUser } from "../../redux/auth/selectors";
-import { selectOpportunities } from "../../redux/opportunity/selectors";
-import { fetchAllOpportunity } from "../../redux/opportunity/operations";
+import { fetchAllUserOpportunity } from "../../redux/opportunity/operations";
+import Modals from "../../components/Modals/Modal";
+import { selectUserOpportunities } from "../../redux/opportunity/selectors";
 
 const MyOpportunitiesPage = () => {
-  const opportunities = useAppSelector(selectOpportunities);
-  const user = useAppSelector(selectUser);
-  const userOpportunities = opportunities.filter(
-    (opp) => opp.userId === user.id
-  );
-
   const dispatch = useAppDispatch();
+  const opportunities = useAppSelector(selectUserOpportunities);
 
   useEffect(() => {
-    dispatch(fetchAllOpportunity);
+    dispatch(fetchAllUserOpportunity());
   }, [dispatch]);
 
   const [isOpenOpportunityForm, setIsOpenOpportunityForm] =
@@ -42,28 +34,20 @@ const MyOpportunitiesPage = () => {
         <FaPlus />
         Add opportunities
       </button>
-      <Modal
-        style={{
-          content: {
-            width: "1036px",
-            height: "639px",
-            position: "relative",
-            ...styles,
-          },
-          overlay,
-        }}
+
+      <Modals
+        type="addOpportunity"
+        width="1036px"
+        height="639px"
         isOpen={isOpenOpportunityForm}
-        onRequestClose={toggleOpportunityForm}
-      >
-        <button
-          onClick={toggleOpportunityForm}
-          className="absolute right-7 top-7 "
-        >
-          <IoCloseOutline className="w-8 h-8" />
-        </button>
-        <OpportunityForm toggleForm={toggleOpportunityForm} type="add" />
-      </Modal>
-      <OpportunitiesList opportunities={userOpportunities} type="my-opp" />
+        onClose={toggleOpportunityForm}
+        confirm={false}
+        component={
+          <OpportunityForm toggleForm={toggleOpportunityForm} type="add" />
+        }
+      />
+
+      <OpportunitiesList opportunities={opportunities} type="my-opp" />
     </div>
   );
 };
