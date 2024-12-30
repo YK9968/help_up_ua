@@ -31,7 +31,7 @@ export const fetchAllUserOpportunity = createAsyncThunk(
 
 export const addOpportunity = createAsyncThunk(
   "create/opportunity",
-  async (opp: ICreateOpportunity, thunkAPI) => {
+  async (opp: FormData, thunkAPI) => {
     try {
       const response = await axios.post("/opportunities/my-opportunities", opp);
       return response.data.data;
@@ -50,6 +50,7 @@ export const updateOpportunity = createAsyncThunk(
     thunkAPI
   ) => {
     if (!opp.id) return;
+
     try {
       const response = await axios.patch(
         `/opportunities/my-opportunities/${opp.id}`,

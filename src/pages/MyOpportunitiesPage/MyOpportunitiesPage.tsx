@@ -5,15 +5,19 @@ import OpportunitiesList from "../../components/OpportunitiesList/OpportunitiesL
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { fetchAllUserOpportunity } from "../../redux/opportunity/operations";
 import Modals from "../../components/Modals/Modal";
-import { selectUserOpportunities } from "../../redux/opportunity/selectors";
+import {
+  selectOpportunities,
+  selectUserOpportunities,
+} from "../../redux/opportunity/selectors";
 
 const MyOpportunitiesPage = () => {
   const dispatch = useAppDispatch();
-  const opportunities = useAppSelector(selectUserOpportunities);
+  const opportunities = useAppSelector(selectOpportunities);
+  const userOpportunities = useAppSelector(selectUserOpportunities);
 
   useEffect(() => {
     dispatch(fetchAllUserOpportunity());
-  }, [dispatch]);
+  }, [dispatch, opportunities]);
 
   const [isOpenOpportunityForm, setIsOpenOpportunityForm] =
     useState<boolean>(false);
@@ -47,7 +51,7 @@ const MyOpportunitiesPage = () => {
         }
       />
 
-      <OpportunitiesList opportunities={opportunities} type="my-opp" />
+      <OpportunitiesList opportunities={userOpportunities} type="my-opp" />
     </div>
   );
 };

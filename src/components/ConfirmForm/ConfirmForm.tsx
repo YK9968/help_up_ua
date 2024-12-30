@@ -1,7 +1,11 @@
 import { FC } from "react";
 import { useAppDispatch } from "../../redux/store";
 import { logOut } from "../../redux/auth/slice";
-import { deleteOpportunity } from "../../redux/opportunity/operations";
+import {
+  deleteOpportunity,
+  fetchAllUserOpportunity,
+} from "../../redux/opportunity/operations";
+import toast from "react-hot-toast";
 
 interface iConfirmForm {
   toggleForm: () => void;
@@ -16,7 +20,17 @@ const ConfirmForm: FC<iConfirmForm> = ({ toggleForm, type, opportunityId }) => {
       dispatch(logOut());
     }
     if (type === "delete" && opportunityId) {
-      dispatch(deleteOpportunity(opportunityId));
+      dispatch(deleteOpportunity(opportunityId))
+        .unwrap()
+        .then(() => {
+          dispatch(fetchAllUserOpportunity());
+          toast.success("Successful delete opportunity");
+        })
+        .catch((error) => {
+          toast.error(
+            "Failed: " + error.message + ". Check your data and try again"
+          );
+        });
     }
     toggleForm();
   };
