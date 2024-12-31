@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "./redux/store";
 import { useEffect } from "react";
 import { refreshUser } from "./redux/auth/operations";
 import Loader from "./components/Loader/Loader";
+import NotFound from "./pages/NotFound/NotFound";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -39,6 +40,7 @@ function App() {
               />
             }
           />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       )}
     </Layout>
