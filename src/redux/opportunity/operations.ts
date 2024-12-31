@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { ICreateOpportunity } from "../../types/opportunitiesType";
 
 export const fetchAllOpportunity = createAsyncThunk(
   "get/opportunities",
@@ -45,10 +44,7 @@ export const addOpportunity = createAsyncThunk(
 
 export const updateOpportunity = createAsyncThunk(
   "update/opportunity",
-  async (
-    opp: { opportunity: ICreateOpportunity; id: string | undefined },
-    thunkAPI
-  ) => {
+  async (opp: { opportunity: FormData; id: string | undefined }, thunkAPI) => {
     if (!opp.id) return;
 
     try {

@@ -10,7 +10,9 @@ const validationOpportunitySchema = Yup.object().shape({
     .required("Organization Name is required")
     .min(3, "Organization Name must be at least 3 characters")
     .max(100, "Organization Name must be at most 100 characters"),
-  website: Yup.string().url("Must be a valid URL").optional(),
+  website: Yup.string()
+    .url("Must be a valid URL")
+    .required("Website is required"),
   email: Yup.string()
     .required("Email is required")
     .email("Must be a valid email address"),

@@ -9,8 +9,10 @@ import {
   fetchAllUserOpportunity,
   updateOpportunity,
 } from "../../redux/opportunity/operations";
-import toast from "react-hot-toast";
 import { selectUserOpportunities } from "../../redux/opportunity/selectors";
+import { createFormData } from "../../utils/createFormData";
+import { CATEGORIES } from "../../types/constants";
+import { showToast } from "../../utils/showToast";
 
 interface IOportunityProps {
   toggleForm: () => void;
@@ -44,9 +46,9 @@ const OpportunityForm: FC<IOportunityProps> = ({ toggleForm, type, id }) => {
         website: opp.website,
         email: opp.email,
         description: opp.description,
-        date: opp.date,
+        date: new Date(opp.date).toISOString().split("T")[0],
         typeWork: opp.typeWork,
-        image: opp.imageUrl,
+        image: opp.imageUrl || "",
         location: opp.location,
       });
     }
@@ -56,47 +58,32 @@ const OpportunityForm: FC<IOportunityProps> = ({ toggleForm, type, id }) => {
     value: ICreateOpportunity,
     actions: FormikHelpers<ICreateOpportunity>
   ): Promise<void> => {
-    const formData = new FormData();
-
-    formData.append("title", value.title);
-    formData.append(
-      "date",
-      value.date instanceof Date ? value.date.toISOString() : value.date
-    );
-    formData.append("description", value.description);
-    formData.append("email", value.email);
-    formData.append("location", value.location);
-    formData.append("organizationName", value.organizationName);
-    formData.append("typeWork", value.typeWork);
-    if (value.website) {
-      formData.append("website", value.website);
-    }
-    if (value.image && value.image instanceof File) {
-      formData.append("image", value.image);
-    }
+    const formData = createFormData(value);
 
     if (type === "add") {
       dispatch(addOpportunity(formData))
         .unwrap()
         .then(() => {
-          toast.success("Successful add opportunity");
+          showToast("success", "Successful add opportunity");
           actions.resetForm();
         })
         .catch((error) => {
-          toast.error(
+          showToast(
+            "error",
             "Failed: " + error.message + ". Check your data and try again"
           );
         });
     } else {
-      dispatch(updateOpportunity({ opportunity: value, id: id }))
+      dispatch(updateOpportunity({ opportunity: formData, id: id }))
         .unwrap()
         .then(() => {
           dispatch(fetchAllUserOpportunity());
-          toast.success("Successful update opportunity");
+          showToast("success", "Successful update opportunity");
           actions.resetForm();
         })
         .catch((error) => {
-          toast.error(
+          showToast(
+            "error",
             "Failed: " + error.message + ". Check your data and try again"
           );
         });
@@ -114,15 +101,12 @@ const OpportunityForm: FC<IOportunityProps> = ({ toggleForm, type, id }) => {
     >
       {({ setFieldValue }) => (
         <Form className="custom-scrollbar">
-          {type === "add" ? (
-            <p className="flex items-center text-2xl pb-12">
-              <span className="text-blue-500 mr-1">Add </span>Opptrunity
-            </p>
-          ) : (
-            <p className="flex items-center text-2xl pb-12">
-              <span className="text-blue-500 mr-1">Update </span>Opptrunity
-            </p>
-          )}
+          <p className="flex items-center text-2xl pb-12">
+            <span className="text-blue-500 mr-1">
+              {type === "add" ? "Add " : "Update "}
+            </span>
+            Opportunity
+          </p>
 
           <div className="flex gap-8 mb-12">
             <div>
@@ -134,18 +118,7 @@ const OpportunityForm: FC<IOportunityProps> = ({ toggleForm, type, id }) => {
                 name="typeWork"
                 placeholder="Categories"
                 type="select"
-                options={[
-                  "SOCIAL_ASSISTANCE",
-                  "ENVIRONMENTAL_ACTIVITIES",
-                  "EDUCATION_MENTORING",
-                  "MEDICAL_SERVICES",
-                  "SUPPORT_FOR_ELDERLY",
-                  "ANIMAL_WELFARE",
-                  "CULTURAL_INITIATIVES",
-                  "HUMANITARIAN_MISSIONS",
-                  "SPORTS_INITIATIVES",
-                  "CRISIS_RESPONSE_VOLUNTEERING",
-                ]}
+                options={CATEGORIES}
               />
               <RenderField
                 name="organizationName"

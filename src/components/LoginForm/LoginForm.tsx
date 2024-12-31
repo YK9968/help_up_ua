@@ -5,7 +5,7 @@ import { loginValidation } from "../../validation/validationLoginUser";
 import { useAppDispatch } from "../../redux/store";
 import { loginUser } from "../../redux/auth/operations";
 import { ILoginUser } from "../../types/authTypes";
-import toast from "react-hot-toast";
+import { showToast } from "../../utils/showToast";
 
 interface iLoginForm {
   togleForm: () => void;
@@ -24,11 +24,12 @@ const LoginForm: FC<iLoginForm> = ({ togleForm }) => {
     dispatch(loginUser(value))
       .unwrap()
       .then(() => {
-        toast.success("Successful authorization");
+        showToast("success", "Successful authorization");
         actions.resetForm();
       })
       .catch((error) => {
-        toast.error(
+        showToast(
+          "error",
           "Failed: " + error.message + ". Check your data and try again"
         );
       });

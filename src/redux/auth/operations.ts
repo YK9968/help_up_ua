@@ -7,8 +7,8 @@ const setAuthHeader = (token: string) => {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 };
 
-axios.defaults.baseURL = "https://help-up-ua-server.onrender.com/api";
-// axios.defaults.baseURL = "http://localhost:5000/api";
+// axios.defaults.baseURL = "https://help-up-ua-server.onrender.com/api";
+axios.defaults.baseURL = "http://localhost:5000/api";
 
 export const registerUser = createAsyncThunk(
   "auth/register",

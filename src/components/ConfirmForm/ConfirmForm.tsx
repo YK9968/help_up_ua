@@ -5,7 +5,7 @@ import {
   deleteOpportunity,
   fetchAllUserOpportunity,
 } from "../../redux/opportunity/operations";
-import toast from "react-hot-toast";
+import { showToast } from "../../utils/showToast";
 
 interface iConfirmForm {
   toggleForm: () => void;
@@ -24,10 +24,11 @@ const ConfirmForm: FC<iConfirmForm> = ({ toggleForm, type, opportunityId }) => {
         .unwrap()
         .then(() => {
           dispatch(fetchAllUserOpportunity());
-          toast.success("Successful delete opportunity");
+          showToast("success", "Successful delete opportunity");
         })
         .catch((error) => {
-          toast.error(
+          showToast(
+            "error",
             "Failed: " + error.message + ". Check your data and try again"
           );
         });

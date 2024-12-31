@@ -6,7 +6,7 @@ import { registerValidation } from "../../validation/validationRegisterUser";
 import { IRegisterUser } from "../../types/authTypes";
 import { useAppDispatch } from "../../redux/store";
 import { registerUser } from "../../redux/auth/operations";
-import toast from "react-hot-toast";
+import { showToast } from "../../utils/showToast";
 
 interface iRegisterForm {
   togleForm: () => void;
@@ -35,11 +35,13 @@ const RegisterForm: FC<iRegisterForm> = ({ togleForm }) => {
     dispatch(registerUser(value))
       .unwrap()
       .then(() => {
-        toast.success("Successful registration");
+        showToast("success", "Successful registration");
+
         actions.resetForm();
       })
       .catch((error) => {
-        toast.error(
+        showToast(
+          "error",
           "Failed: " + error.message + ". Check your data and try again"
         );
       });
