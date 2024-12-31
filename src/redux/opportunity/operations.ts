@@ -3,10 +3,14 @@ import axios from "axios";
 
 export const fetchAllOpportunity = createAsyncThunk(
   "get/opportunities",
-  async (_, thunkAPI) => {
+  async (page: number, thunkAPI) => {
     try {
-      const response = await axios.get("/opportunities");
-      return response.data.data;
+      const response = await axios.get("/opportunities", {
+        params: {
+          page,
+        },
+      });
+      return response.data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || "Failed to get opp"

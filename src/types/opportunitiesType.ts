@@ -44,4 +44,5 @@ export interface IOpportunitiseState {
   userItems: IOpportunity[];
   isOppLoading: boolean;
   isOppError: boolean;
+  total: number;
 }

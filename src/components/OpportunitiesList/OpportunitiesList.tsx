@@ -4,7 +4,6 @@ import OpportunityCard from "../OpportunityCard/OpportunityCard";
 import { MdDelete, MdEdit } from "react-icons/md";
 import Modals from "../Modals/Modal";
 import OpportunityForm from "../OpportunityForm/OpportunityForm";
-import { sortedOpportunities } from "../../utils/sortedOpportunities";
 
 interface IOpportunitiesListProps {
   opportunities: IOpportunity[];
@@ -31,7 +30,7 @@ const OpportunitiesList: FC<IOpportunitiesListProps> = ({
 
   return type === "all-opp" ? (
     <ul className="flex flex-col gap-10 mb-24">
-      {sortedOpportunities(opportunities).map((opp: IOpportunity) => (
+      {opportunities.map((opp: IOpportunity) => (
         <li
           key={opp.id}
           className="w-cardOpportunityWidth px-10 py-12 drop-shadow-lg bg-white rounded-3xl"
@@ -42,7 +41,7 @@ const OpportunitiesList: FC<IOpportunitiesListProps> = ({
     </ul>
   ) : (
     <ul className="flex flex-col gap-10 mb-24">
-      {sortedOpportunities(opportunities).map((opp: IOpportunity) => (
+      {opportunities.map((opp: IOpportunity) => (
         <li
           className="w-cardOpportunityWidth px-10 py-12 drop-shadow-lg bg-white rounded-3xl"
           key={opp.id}

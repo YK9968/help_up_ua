@@ -13,6 +13,7 @@ const initialState: IOpportunitiseState = {
   userItems: [],
   isOppLoading: false,
   isOppError: false,
+  total: 0,
 };
 
 export const opportunitiesSlice = createSlice({
@@ -28,7 +29,8 @@ export const opportunitiesSlice = createSlice({
       })
       .addCase(fetchAllOpportunity.fulfilled, (state, action) => {
         state.isOppLoading = false;
-        state.items = action.payload;
+        state.items = action.payload.data;
+        state.total = action.payload.total;
       })
       .addCase(fetchAllOpportunity.rejected, (state) => {
         state.isOppLoading = false;
