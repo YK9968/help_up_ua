@@ -20,7 +20,7 @@ const Pagination: FC<IPaginationProps> = ({
       <button disabled={total >= page * limitPage} onClick={prevPage}>
         <FaAngleLeft
           className={`w-7 h-7 ${
-            total <= page * limitPage
+            page !== 1
               ? "text-borderColor  hover:text-buttonHoverColor transition-all duration-150 ease-in-out"
               : "text-gray-400"
           }`}

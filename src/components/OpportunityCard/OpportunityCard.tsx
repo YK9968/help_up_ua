@@ -45,11 +45,15 @@ const OpportunityCard: FC<IOpportunityProps> = ({ info }) => {
           <p>{setTypeWork(typeWork)}</p>
         </div>
         <NavLink
-          className="w-titleOpportunityWidth h-titleOpportunityHeight break-words  mb-5 block font-semibold text-3xl  hover:text-buttonHoverColor transition-all duration-150 ease-in-out "
+          className=" hover:text-buttonHoverColor transition-all duration-150 ease-in-out mb-5"
           to={`/opportunities/${id}`}
         >
-          {title}
+          <p>Read more...</p>
+          <h2 className="w-titleOpportunityWidth h-titleOpportunityHeight break-words  block font-semibold text-3xl  ">
+            {title}
+          </h2>
         </NavLink>
+
         <div className="flex items-center  gap-2 ">
           <CiGlobe className="w-7 h-7 text-buttonColor inline-block" />
           <a

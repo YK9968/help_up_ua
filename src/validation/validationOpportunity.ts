@@ -19,7 +19,7 @@ const validationOpportunitySchema = Yup.object().shape({
   description: Yup.string()
     .required("Description is required")
     .min(10, "Description must be at least 10 characters")
-    .max(500, "Description must be at most 500 characters"),
+    .max(1500, "Description must be at most 1500 characters"),
   date: Yup.string()
     .required("Date is required")
     .matches(/^\d{4}-\d{2}-\d{2}$/, "Date must be in the format YYYY-MM-DD"),

@@ -6,6 +6,7 @@ import {
   fetchAllUserOpportunity,
 } from "../../redux/opportunity/operations";
 import { showToast } from "../../utils/showToast";
+import { useNavigate } from "react-router-dom";
 
 interface iConfirmForm {
   toggleForm: () => void;
@@ -14,10 +15,12 @@ interface iConfirmForm {
 }
 
 const ConfirmForm: FC<iConfirmForm> = ({ toggleForm, type, opportunityId }) => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const confirmForm = () => {
     if (type === "logoutUser") {
       dispatch(logOut());
+      navigate("/");
     }
     if (type === "delete" && opportunityId) {
       dispatch(deleteOpportunity(opportunityId))
