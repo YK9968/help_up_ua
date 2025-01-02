@@ -22,7 +22,7 @@ const CatalogOpportunityPage = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchAllOpportunity(page));
+    dispatch(fetchAllOpportunity({ page }));
   }, [dispatch, page]);
 
   const opportunities = useAppSelector(selectOpportunities);

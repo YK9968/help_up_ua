@@ -3,11 +3,16 @@ import axios from "axios";
 
 export const fetchAllOpportunity = createAsyncThunk(
   "get/opportunities",
-  async (page: number, thunkAPI) => {
+  async (
+    param: { page?: number; location?: string; categories?: string | string[] },
+    thunkAPI
+  ) => {
     try {
       const response = await axios.get("/opportunities", {
         params: {
-          page,
+          page: param.page,
+          location: param.location,
+          categories: param.categories,
         },
       });
       return response.data;
